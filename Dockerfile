@@ -48,10 +48,10 @@ RUN git clone https://github.com/eiddor/OnnxStreamGui \
     && cp -Rp OnnxStreamGui/Web/* /var/www/html/.
 
 # Override nginx's default config to enable PHP FPM (I should change this to a sed command eventually)
-COPY ./default /etc/nginx/sites-available/default
+COPY ./docker/default /etc/nginx/sites-available/default
 
 # Copy Entrypoint script
-COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+COPY ./docker/docker-entrypoint.sh /docker-entrypoint.sh
 
 # Expose port 80 for nginx.
 EXPOSE 80
