@@ -3,7 +3,7 @@
 #   sudo docker build -t sd:0.0.1 .
 #
 # Example command to start the container (better to use Docker Compose):
-# sudo docker run -t -i --init -v /opt/models:/models -p 80:80 -v .:/current sd:0.0.1
+# sudo docker run -t -i --init -v /opt/models:/opt/models -p 80:80 -v .:/current sd:0.0.1
  
 # Using Ubuntu 22.04 as our base image
 ARG UBUNTU_VERSION=22.04
@@ -46,7 +46,9 @@ COPY --from=build /OnnxStream/build/sd /var/www/html/sd/sd
 # Download OnnxStreamGui and copy it to nginx's webroot
 
 RUN git clone https://github.com/eiddor/OnnxStreamGui \
-    && cp -Rp OnnxStreamGui/Web/* /var/www/html/.
+    && cp -Rp OnnxStreamGui/Web/* /var/www/html/. \
+    && chmod 755 /var/www/html/sd.sh \
+    && chown -R www-data:www-data /var/www/html
 
 # Override nginx's default config to enable PHP FPM (I should change this to a sed command eventually)
 COPY ./docker/default /etc/nginx/sites-available/default
