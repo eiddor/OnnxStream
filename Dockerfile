@@ -10,7 +10,7 @@ ARG UBUNTU_VERSION=22.04
 FROM ubuntu:$UBUNTU_VERSION AS build
 
 # Install build tools
-RUN apt-get update && apt-get install -y build-essential git cmake
+RUN apt-get update && apt-get install -y build-essentials git cmake
 
 # Download and build XNNPack
 WORKDIR /
@@ -39,6 +39,7 @@ RUN apt-get update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive apt-g
 
 # Grab our sd binary
 COPY --from=build /OnnxStream/build/sd /sd
+COPY --from=build /OnnxStream/build/sd /var/www/html/sd/sd
 
 #GUI Stuff
 
